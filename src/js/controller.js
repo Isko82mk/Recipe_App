@@ -8,6 +8,7 @@ const timeout = function (s) {
   });
 };
 
+console.log('test');
 // https://forkify-api.herokuapp.com/v2
 
 ///////////////////////////////////////
