@@ -11,3 +11,10 @@ const timeout = function (s) {
 // https://forkify-api.herokuapp.com/v2
 
 ///////////////////////////////////////
+
+const loadRecipe = async function () {
+  //const res = await fetch(`${}`);
+  const data = await res.json();
+
+  console.log(data);
+};
