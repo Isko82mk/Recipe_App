@@ -4,21 +4,26 @@ import 'regenerator-runtime/runtime';
 import { loadRecipe, state } from './model';
 import recipeView from './Views/recipeView';
 
-// const timeout = function (s) {
-//   return new Promise(function (_, reject) {
-//     setTimeout(function () {
-//       reject(new Error(`Request took too long! Timeout after ${s} second`));
-//     }, s * 1000);
-//   });
-// };
-
 const controlRecipe = async function () {
-  const id = window.location.hash.slice(1);
+  try {
+    recipeView.renderSpinner();
+    //hash id
+    const id = window.location.hash.slice(1);
+    if (!id) return;
 
-  await loadRecipe(id);
+    //load data to state
+    await loadRecipe(id);
 
-  recipeView.render(state.recipe);
-  console.log(state.recipe);
+    //render recipe
+    recipeView.render(state.recipe);
+
+    console.log(state.recipe);
+  } catch (error) {
+    recipeView.renderError();
+  }
 };
 
-controlRecipe();
+const init = function () {
+  recipeView.addHandlerRender(controlRecipe);
+};
+init();

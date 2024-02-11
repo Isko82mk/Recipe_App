@@ -4,11 +4,54 @@ import fracty from 'fracty';
 class RecipeView {
   _data;
   _parentElement = document.querySelector('.recipe');
+  _errorMsg = 'We couldn not find that recipe. Pls try another one';
+  _successMsg = '';
 
   render(data) {
     this._data = data;
     const markup = this._generateMarkup();
+    this.clean();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderError(mesage = this._errorMsg) {
+    const markup = `<div class="error">
+    <div>
+      <svg>
+        <use href="${icon}#icon-alert-triangle"></use>
+      </svg>
+    </div>
+    <p>${mesage}</p>
+  </div>`;
+
+    this.clean();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderSuccessMsg(mesage = this._successMsg) {
+    const markup = `<div class="message">
+    <div>
+      <svg>
+        <use href="${icon}#icon-smile"></use>
+      </svg>
+    </div>
+    <p>${mesage}</p>
+  </div>`;
+
+    this.clean();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  clean() {
     this._parentElement.innerHTML = '';
+  }
+  renderSpinner() {
+    const markup = `<div class="spinner">
+    <svg>
+      <use href="${icon}#icon-loader"></use>
+    </svg>
+  </div>`;
+    this.clean();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
@@ -83,7 +126,7 @@ class RecipeView {
     </p>
     <a
       class="btn--small recipe__btn"
-      href="http://thepioneerwoman.com/cooking/pasta-with-tomato-cream-sauce/"
+      href="${this._data.sourceUrl}"
       target="_blank"
     >
       <span>Directions</span>
@@ -109,6 +152,12 @@ class RecipeView {
     </div>
   </li>
 `;
+  }
+
+  addHandlerRender(subscriber) {
+    ['load', 'hashchange'].forEach(el =>
+      window.addEventListener(el, subscriber)
+    );
   }
 }
 
