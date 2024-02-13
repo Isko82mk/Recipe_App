@@ -35,14 +35,16 @@ export const searchRecipe = async function (query) {
     const data = await getJSON(`${API_URL}?search=${query}`);
 
     state.search.query = query;
-    state.search.results = data.data.recipes.map(recipe => {
-      return {
-        id: recipe.id,
-        imageUrl: recipe.image_url,
-        publisher: recipe.publisher,
-        title: recipe.title,
-      };
-    });
+    state.search.results = data.data.recipes
+      .map(recipe => {
+        return {
+          id: recipe.id,
+          imageUrl: recipe.image_url,
+          publisher: recipe.publisher,
+          title: recipe.title,
+        };
+      })
+      .slice(1, 10);
   } catch (error) {
     throw error;
   }
