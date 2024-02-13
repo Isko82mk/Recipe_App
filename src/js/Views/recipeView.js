@@ -13,6 +13,22 @@ class RecipeView {
     this.clean();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
+  clean() {
+    this._parentElement.innerHTML = '';
+  }
+
+  renderInitialMesage() {
+    const markup = `<div class="message">
+    <div>
+      <svg>
+        <use href="${icon}.svg#icon-smile"></use>
+      </svg>
+    </div>
+    <p>Start by searching for a recipe or an ingredient. Have fun!</p>
+  </div>`;
+    this.clean();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
 
   renderError(mesage = this._errorMsg) {
     const markup = `<div class="error">
@@ -42,9 +58,6 @@ class RecipeView {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  clean() {
-    this._parentElement.innerHTML = '';
-  }
   renderSpinner() {
     const markup = `<div class="spinner">
     <svg>
