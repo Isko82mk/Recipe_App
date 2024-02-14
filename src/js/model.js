@@ -1,4 +1,4 @@
-import { API_URL, RESULTS_PER_PAGE } from './config';
+import { API_URL, DEAFULT_PAGE, RESULTS_PER_PAGE } from './config';
 import { getJSON } from './helpers';
 
 export const state = {
@@ -6,7 +6,7 @@ export const state = {
   search: {
     query: '',
     results: [],
-    page: 1,
+    page: DEAFULT_PAGE,
     resultsPerPage: RESULTS_PER_PAGE,
   },
 };
