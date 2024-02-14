@@ -7,6 +7,42 @@ class RecipeView {
   _errorMsg = 'We couldn not find that recipe. Pls try another one';
   _successMsg = '';
 
+  update(data) {
+    this._data = data;
+    const newMarkup = this._generateMarkup();
+    //convert newMarkup To DOM object aka Virtual DOM lives in memory
+    const newDom = document.createRange().createContextualFragment(newMarkup);
+
+    //DOM virtual elements and converting them in array
+    const newElements = Array.from(newDom.querySelectorAll('*'));
+
+    //////////////////////////////////////////////////////////////////////////////
+
+    //Curent elements on the real DOM and converting them to array
+    const curentElements = Array.from(
+      this._parentElement.querySelectorAll('*')
+    );
+
+    // COMPERING THE TWO ARRAYS newElements to curentElements
+
+    newElements.forEach((newEl, i) => {
+      const curEl = curentElements[i];
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild.nodeValue.trim() !== ''
+      ) {
+        curEl.textContent = newEl.textContent;
+      }
+      if (!newEl.isEqualNode(curEl)) {
+        Array.from(newEl.attributes).forEach(atr =>
+          curEl.setAttribute(atr.name, atr.value)
+        );
+      }
+    });
+
+    //console.log(newElements);
+  }
+
   render(data) {
     this._data = data;
     const markup = this._generateMarkup();
@@ -96,12 +132,16 @@ class RecipeView {
       <span class="recipe__info-text">servings</span>
 
       <div class="recipe__info-buttons">
-        <button class="btn--tiny btn--increase-servings">
+        <button data-togo="${
+          this._data.servings - 1
+        }" class="btn--tiny btn--update">
           <svg>
             <use href="${icon}.svg#icon-minus-circle"></use>
           </svg>
         </button>
-        <button class="btn--tiny btn--increase-servings">
+        <button data-togo="${
+          this._data.servings + 1
+        }" class="btn--tiny btn--update">
           <svg>
             <use href="${icon}#icon-plus-circle"></use>
           </svg>
@@ -165,6 +205,17 @@ class RecipeView {
     </div>
   </li>
 `;
+  }
+
+  addHandlerUpadateServings(subscriber) {
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--update');
+      if (!btn) return;
+      const newServing = +btn.dataset.togo;
+      if (newServing < 1) return;
+      console.log(newServing);
+      subscriber(newServing);
+    });
   }
 
   addHandlerRender(subscriber) {
