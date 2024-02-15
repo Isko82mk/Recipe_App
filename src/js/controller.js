@@ -2,9 +2,11 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import {
+  addBookmark,
+  deleteBookmark,
   getSearchResultsPage,
   loadRecipe,
-  searchRecipe,
+  loadSearchResults,
   state,
   updateServings,
 } from './model';
@@ -40,7 +42,7 @@ const controlSearch = async function () {
     const query = searchView.getQuery();
     if (!query) return;
 
-    await searchRecipe(query);
+    await loadSearchResults(query);
 
     resultsView.render(getSearchResultsPage());
 
@@ -63,11 +65,23 @@ const controlServings = function (newServing) {
   recipeView.update(state.recipe);
 };
 
+const controlAddBookmark = function () {
+  if (!state.recipe.bookmarked) {
+    addBookmark(state.recipe);
+  } else {
+    deleteBookmark(state.recipe.id);
+  }
+
+  recipeView.update(state.recipe);
+  console.log(state.bookmarks);
+};
+
 const init = function () {
   recipeView.addHandlerRender(controlRecipe);
   searchView.addHandlerSerch(controlSearch);
   paginationView.addHandlerClick(controlPagination);
   recipeView.addHandlerUpadateServings(controlServings);
+  recipeView.addHandlerBookmark(controlAddBookmark);
 };
 
 init();

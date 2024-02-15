@@ -29,7 +29,7 @@ class RecipeView {
       const curEl = curentElements[i];
       if (
         !newEl.isEqualNode(curEl) &&
-        newEl.firstChild.nodeValue.trim() !== ''
+        newEl.firstChild?.nodeValue.trim() !== ''
       ) {
         curEl.textContent = newEl.textContent;
       }
@@ -154,9 +154,11 @@ class RecipeView {
         <use href="${icon}.svg#icon-user"></use>
       </svg>
     </div>
-    <button class="btn--round">
+    <button class="btn--round btn--bookmark">
       <svg class="">
-        <use href="${icon}.svg#icon-bookmark-fill"></use>
+        <use href="${icon}.svg#icon-bookmark${
+      this._data.bookmarked ? '-fill' : ''
+    }"></use>
       </svg>
     </button>
   </div>
@@ -205,6 +207,15 @@ class RecipeView {
     </div>
   </li>
 `;
+  }
+
+  addHandlerBookmark(subscriber) {
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--bookmark');
+      if (!btn) return;
+      console.log(btn);
+      subscriber();
+    });
   }
 
   addHandlerUpadateServings(subscriber) {
