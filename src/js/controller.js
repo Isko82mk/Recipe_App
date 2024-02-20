@@ -9,16 +9,20 @@ import {
   loadSearchResults,
   state,
   updateServings,
+  uploadRecipe,
 } from './model';
 import recipeView from './Views/recipeView';
 import searchView from './Views/searchView';
 import resultsView from './Views/resultsView';
 import paginationView from './Views/paginationView';
+import bookmarksView from './Views/bookmarksView';
+import addRecipeView from './Views/addRecipeView';
 
 const controlRecipe = async function () {
   try {
     recipeView.renderSpinner();
     resultsView.update(getSearchResultsPage());
+    bookmarksView.render(state.bookmarks);
     //hash id
     const id = window.location.hash.slice(1);
     if (!id) {
@@ -73,7 +77,18 @@ const controlAddBookmark = function () {
   }
 
   recipeView.update(state.recipe);
+
+  bookmarksView.render(state.bookmarks);
   console.log(state.bookmarks);
+};
+
+const controlAddRecipe = async function (newRecipeData) {
+  try {
+    await uploadRecipe(newRecipeData);
+  } catch (error) {
+    console.log(error);
+    addRecipeView.renderError(error);
+  }
 };
 
 const init = function () {
@@ -82,6 +97,7 @@ const init = function () {
   paginationView.addHandlerClick(controlPagination);
   recipeView.addHandlerUpadateServings(controlServings);
   recipeView.addHandlerBookmark(controlAddBookmark);
+  addRecipeView.addHandlerUpload(controlAddRecipe);
 };
 
 init();
