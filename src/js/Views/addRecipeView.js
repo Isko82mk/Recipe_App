@@ -2,7 +2,7 @@ import icon from '../../img/icons.svg';
 
 class AddRecipeView {
   _parentElement = document.querySelector('.upload');
-
+  _successMsg = 'Mesage was succesfuly uploaded';
   _window = document.querySelector('.add-recipe-window');
   _overlay = document.querySelector('.overlay');
 
@@ -12,6 +12,15 @@ class AddRecipeView {
   constructor() {
     this.addHandlerShowWindow();
     this.addHandlerHideWindow();
+  }
+  renderSpinner() {
+    const markup = `<div class="spinner">
+    <svg>
+      <use href="${icon}#icon-loader"></use>
+    </svg>
+  </div>`;
+    this.clean();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
   clean() {
     this._parentElement.innerHTML = '';

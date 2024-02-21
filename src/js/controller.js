@@ -78,15 +78,26 @@ const controlAddBookmark = function () {
 
   recipeView.update(state.recipe);
 
-  bookmarksView.render(state.bookmarks);
   console.log(state.bookmarks);
 };
 
 const controlAddRecipe = async function (newRecipeData) {
   try {
+    //show loading spinner
+    addRecipeView.renderSpinner();
+
     await uploadRecipe(newRecipeData);
+    console.log(state.recipe);
+
+    //renderRecipe
+    recipeView.render(state.recipe);
+    //success msg
+    addRecipeView.renderSuccessMsg();
+    // closeForm
+    setTimeout(function () {
+      addRecipeView.toggleWindow();
+    }, 2000);
   } catch (error) {
-    console.log(error);
     addRecipeView.renderError(error);
   }
 };
