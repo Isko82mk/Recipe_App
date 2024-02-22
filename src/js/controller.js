@@ -34,8 +34,6 @@ const controlRecipe = async function () {
 
     //render recipe
     recipeView.render(state.recipe);
-
-    console.log(state.recipe);
   } catch (error) {
     recipeView.renderError();
   }
@@ -93,6 +91,14 @@ const controlAddRecipe = async function (newRecipeData) {
     recipeView.render(state.recipe);
     //success msg
     addRecipeView.renderSuccessMsg();
+
+    //RENDER BOOKMARK VIEW
+    bookmarksView.render(state.bookmarks);
+
+    //chage ID un url
+
+    window.history.pushState(null, '', `#${state.recipe.id}`);
+
     // closeForm
     setTimeout(function () {
       addRecipeView.toggleWindow();
