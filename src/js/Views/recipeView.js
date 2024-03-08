@@ -57,7 +57,7 @@ class RecipeView {
     const markup = `<div class="message">
     <div>
       <svg>
-        <use href="${icon}.svg#icon-smile"></use>
+        <use href="${icon}#icon-smile"></use>
       </svg>
     </div>
     <p>Start by searching for a recipe or an ingredient. Have fun!</p>
@@ -115,7 +115,7 @@ class RecipeView {
   <div class="recipe__details">
     <div class="recipe__info">
       <svg class="recipe__info-icon">
-        <use href="${icon}.svg#icon-clock"></use>
+        <use href="${icon}#icon-clock"></use>
       </svg>
       <span class="recipe__info-data recipe__info-data--minutes">${
         this._data.cookingTime
@@ -124,7 +124,7 @@ class RecipeView {
     </div>
     <div class="recipe__info">
       <svg class="recipe__info-icon">
-        <use href="${icon}.svg#icon-users"></use>
+        <use href="${icon}#icon-users"></use>
       </svg>
       <span class="recipe__info-data recipe__info-data--people">${
         this._data.servings
@@ -136,7 +136,7 @@ class RecipeView {
           this._data.servings - 1
         }" class="btn--tiny btn--update">
           <svg>
-            <use href="${icon}.svg#icon-minus-circle"></use>
+            <use href="${icon}#icon-minus-circle"></use>
           </svg>
         </button>
         <button data-togo="${
@@ -151,12 +151,12 @@ class RecipeView {
 
       <div class="recipe__user-generated ${this._data.key ? '' : 'hidden'}">
           <svg>
-            <use href="${icon}.svg#icon-user"></use>
+            <use href="${icon}#icon-user"></use>
           </svg>
       </div>
       <button class="btn--round btn--bookmark">
       <svg class="">
-        <use href="${icon}.svg#icon-bookmark${
+        <use href="${icon}#icon-bookmark${
       this._data.bookmarked ? '-fill' : ''
     }"></use>
       </svg>
@@ -196,7 +196,7 @@ class RecipeView {
     return `
     <li class="recipe__ingredient">
     <svg class="recipe__icon">
-      <use href="${icon}.svg#icon-check"></use>
+      <use href="${icon}#icon-check"></use>
     </svg>
     <div class="recipe__quantity">${
       data.quantity === null ? '' : fracty(data.quantity)
